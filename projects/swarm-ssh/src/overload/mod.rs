@@ -27,7 +27,7 @@ impl SwarmSSH {
     ///
     /// # Examples
     ///
-    /// ```no_run
+    /// ```rust, no_run
     /// # use diagnostic_quick::QResult;
     /// # use swarm_ssh::SwarmSSH;
     /// async fn test_password() -> QResult<SwarmSSH> {

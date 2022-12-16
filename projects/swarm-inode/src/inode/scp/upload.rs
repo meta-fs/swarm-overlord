@@ -17,8 +17,8 @@ impl SwarmSSH {
     /// # use swarm_ssh::SwarmSSH;
     /// async fn test_upload() -> QResult {
     ///     let ssh = SwarmSSH::login_password("192.168.1.100:22", "root", "password").await?;
-    ///     let data: &[u8] = include_bytes!("../mod.rs");
-    ///     ssh.upload_task(data, "/tmp/mod.rs")?.with_permission(0o644).execute().await?;
+    ///     let data: &[u8] = include_bytes!("../inode");
+    ///     ssh.upload_task(data, "/tmp/inode")?.with_permission(0o644).execute().await?;
     ///     Ok(())
     /// }
     /// ```

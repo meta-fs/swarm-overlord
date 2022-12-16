@@ -3,10 +3,10 @@ use std::{
     net::ToSocketAddrs,
 };
 
-use diagnostic_quick::error_3rd::SSH2Session;
-
-pub struct SwarmOverload {
-    session: SSH2Session,
-}
+use sled_typed::Database;
 
 pub mod github;
+
+pub struct SwarmOverload {
+    database: Database,
+}
