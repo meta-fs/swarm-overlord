@@ -1,0 +1,35 @@
+[package]
+name = "swarm-brood"
+publish = false
+version = "0.0.0"
+authors = ["Aster <192607617@qq.com>"]
+description = "Send the drone to the target computer and startup the swarm"
+repository = "https://github.com/oovm/sub_projects"
+documentation = "https://docs.rs/sub_projects"
+readme = "Readme.md"
+license = "MPL-2.0"
+edition = "2021"
+
+[[bin]]
+name = "swarm-drone"
+path = "drone/main.rs"
+
+[dependencies]
+clap = { version = "4.0.29", features = ["derive"] }
+tokio = { version = "1.23.0", features = ["full"] }
+tracing-subscriber = "0.3.16"
+
+[dependencies.swarm-overlord]
+#version = "0.0.0"
+path = "../swarm-overlord"
+
+[dependencies.diagnostic-quick]
+version = "0.3.4"
+features = []
+
+[dev-dependencies]
+
+
+
+[features]
+default = []
