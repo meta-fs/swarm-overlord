@@ -1,23 +1,26 @@
 use super::*;
 
 impl SwarmSSH {
-    /// Create a download task, note that the execute command needs to be [`DownloadTask::activated`]
+    /// Create a upload task, note that the execute command needs to be [`DownloadTask::activated`]
     ///
     /// # Arguments
     ///
+    /// * `content`:
     /// * `remote_path`:
     ///
-    /// returns: Result<DownloadTask, QError>
+    /// returns: Result<UploadTask, QError>
     ///
     /// # Examples
     ///
-    /// ```
-    /// use swarm_ssh::SwarmSSH;
+    /// ```rust,no_run
+    /// let ssh = swarm_ssh::SwarmSSH::login_password("192.168.1.100:22", "root", "password").await?;
+    /// let data: &[u8] = include_bytes!("../Cargo.toml");
+    /// ssh.upload_task(data, "/tmp/Cargo.toml")?.with_permission(0o644).execute().await?;
     /// ```
     pub fn upload_task<C, P>(&self, content: C, remote_path: P) -> QResult<UploadTask>
-    where
-        P: AsRef<Path>,
-        ContentResolver: TryFrom<C, Error = QError>,
+        where
+            P: AsRef<Path>,
+            ContentResolver: TryFrom<C, Error=QError>,
     {
         let content = ContentResolver::try_from(content)?.content;
         Ok(UploadTask { content, target: remote_path.as_ref().to_path_buf(), permission: 0o644, session: &self.session })
@@ -25,36 +28,33 @@ impl SwarmSSH {
 }
 
 impl<'s> UploadTask<'s> {
-    /// Create a download task, note that the execute command needs to be [`DownloadTask::activated`]
-    ///
-    /// # Arguments
-    ///
-    /// * `remote_path`:
-    ///
-    /// returns: Result<DownloadTask, QError>
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use swarm_ssh::SwarmSSH;
-    /// ```
+    /// Get current permission setting
+    pub fn get_permission(&self) -> i32 {
+        self.permission
+    }
+    /// Set permissions after file upload
+    pub fn set_permission(&mut self, permission: i32) {
+        self.permission = permission;
+    }
+    /// Set permissions after file upload
     pub fn with_permission(mut self, permission: i32) -> Self {
         self.permission = permission;
         self
     }
-    /// Create a download task, note that the execute command needs to be [`DownloadTask::activated`]
-    ///
-    /// # Arguments
-    ///
-    /// * `remote_path`:
-    ///
-    /// returns: Result<DownloadTask, QError>
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use swarm_ssh::SwarmSSH;
-    /// ```
+    /// Get current target path
+    pub fn get_remote_path(&self) -> &Path {
+        &self.target
+    }
+    /// Set target path after file upload
+    pub fn set_remote_path<P: AsRef<Path>>(&mut self, remote_path: P) {
+        self.target = remote_path.as_ref().to_path_buf();
+    }
+    /// Set target path after file upload
+    pub fn with_remote_path<P: AsRef<Path>>(mut self, remote_path: P) -> Self {
+        self.target = remote_path.as_ref().to_path_buf();
+        self
+    }
+    /// Execute this upload task
     pub async fn execute(self) -> QResult<()> {
         let mut scp = self.session.scp_send(&self.target, self.permission, self.content.len() as u64, None)?;
         scp.write(&self.content)?;
