@@ -11,8 +11,8 @@ license = "MPL-2.0"
 edition = "2021"
 
 [[bin]]
-name = "swarm-drone"
-path = "drone/main.rs"
+name = "swarm-overlord"
+path = "overlord/main.rs"
 
 [dependencies]
 clap = { version = "4.0.29", features = ["derive"] }

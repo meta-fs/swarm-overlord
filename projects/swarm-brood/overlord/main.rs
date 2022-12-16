@@ -11,20 +11,13 @@ pub struct DroneBuilder {
     /// Default: `127.0.0.1:3000`
     #[arg(short, long)]
     socket: Option<String>,
+    #[arg(short, long)]
+    port: Option<u16>,
     /// Config Path
     ///
-    /// Default: `./swarm-drone.toml`
+    /// Default: `./swarm-overlord.toml`
     #[arg(short, long)]
     config: Option<String>,
-    ///
-    #[arg(long, value_name = "ROUTER")]
-    websocket: Option<String>,
-    ///
-    #[arg(long, value_name = "ROUTER")]
-    restful: Option<String>,
-    ///
-    #[arg(long, value_name = "ROUTER")]
-    graphql: Option<String>,
 }
 
 #[tokio::main]
