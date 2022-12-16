@@ -1,6 +1,5 @@
 use diagnostic_quick::QResult;
-
-use swarm_overlord::SwarmSSH;
+use swarm_ssh::SwarmSSH;
 
 #[test]
 fn ready() {

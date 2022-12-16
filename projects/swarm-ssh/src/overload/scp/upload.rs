@@ -1,6 +1,19 @@
 use super::*;
 
 impl SwarmSSH {
+    /// Create a download task, note that the execute command needs to be [`DownloadTask::activated`]
+    ///
+    /// # Arguments
+    ///
+    /// * `remote_path`:
+    ///
+    /// returns: Result<DownloadTask, QError>
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use swarm_ssh::SwarmSSH;
+    /// ```
     pub fn upload_task<C, P>(&self, content: C, remote_path: P) -> QResult<UploadTask>
     where
         P: AsRef<Path>,
@@ -12,11 +25,36 @@ impl SwarmSSH {
 }
 
 impl<'s> UploadTask<'s> {
+    /// Create a download task, note that the execute command needs to be [`DownloadTask::activated`]
+    ///
+    /// # Arguments
+    ///
+    /// * `remote_path`:
+    ///
+    /// returns: Result<DownloadTask, QError>
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use swarm_ssh::SwarmSSH;
+    /// ```
     pub fn with_permission(mut self, permission: i32) -> Self {
         self.permission = permission;
         self
     }
-
+    /// Create a download task, note that the execute command needs to be [`DownloadTask::activated`]
+    ///
+    /// # Arguments
+    ///
+    /// * `remote_path`:
+    ///
+    /// returns: Result<DownloadTask, QError>
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use swarm_ssh::SwarmSSH;
+    /// ```
     pub async fn execute(self) -> QResult<()> {
         let mut scp = self.session.scp_send(&self.target, self.permission, self.content.len() as u64, None)?;
         scp.write(&self.content)?;

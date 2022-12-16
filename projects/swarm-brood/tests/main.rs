@@ -1,6 +1,6 @@
 use diagnostic_quick::QResult;
 
-use swarm_overlord::SwarmSSH;
+use swarm_overlord::SwarmOverload;
 
 #[test]
 fn ready() {
@@ -9,7 +9,7 @@ fn ready() {
 
 #[tokio::test]
 async fn main() -> QResult {
-    let client = SwarmSSH::login_password("192.168.1.100:22", "root", "projecta").await?;
+    let client = SwarmOverload::login_password("192.168.1.100:22", "root", "projecta").await?;
 
     let shell = client.shell_runner()?;
     println!("{}", shell.execute("ll").await?);

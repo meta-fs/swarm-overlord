@@ -8,17 +8,32 @@ use std::{
 
 use diagnostic_quick::{error_3rd::SSH2Session, QError, QResult};
 
+/// Connect to a remote computer via the ssh protocol.
 pub struct SwarmSSH {
     session: SSH2Session,
 }
 
-pub mod github;
 pub mod scp;
+pub mod shell;
 
 impl SwarmSSH {
+    /// Log in to the remote computer with username and password
+    ///
+    /// # Arguments
+    ///
+    /// * `address`: The address of the remote computer, such as `192.168.1.100:22`
+    /// * `user`: The username of the remote computer, such as `root`
+    /// * `password`: The password of the remote computer, such as `password`
+    ///
+    /// # Examples
+    ///
+    /// ```rust,no_run
+    /// use swarm_ssh::SwarmSSH;
+    /// let ssh = SwarmSSH::login_password("192.168.1.100:22", "root", "password").await?;
+    /// ```
     pub async fn login_password<A>(address: A, user: &str, password: &str) -> QResult<Self>
-    where
-        A: ToSocketAddrs,
+        where
+            A: ToSocketAddrs,
     {
         let tcp = TcpStream::connect(address)?;
         let mut session = SSH2Session::new()?;
@@ -30,22 +45,5 @@ impl SwarmSSH {
         }
         Ok(Self { session })
     }
-    pub fn shell_runner(&self) -> QResult<ShellRunner> {
-        Ok(ShellRunner { session: &self.session })
-    }
 }
 
-pub struct ShellRunner<'s> {
-    session: &'s SSH2Session,
-}
-
-impl ShellRunner<'_> {
-    pub async fn execute(&self, command: &str) -> QResult<String> {
-        let mut shell = self.session.channel_session()?;
-        shell.exec(command)?;
-        let mut stdout = String::new();
-        shell.read_to_string(&mut stdout)?;
-        shell.wait_close()?;
-        Ok(stdout)
-    }
-}

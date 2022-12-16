@@ -3,7 +3,7 @@ name = "swarm-overlord"
 version = "0.0.0"
 authors = ["Aster <192607617@qq.com>"]
 description = "Manage [swarm-drone]()'s life cycle, including creation, operation and deletion."
-repository = "https://github.com/oovm/sub_projects"
+repository = "https://github.com/meta-fs/swarm"
 documentation = "https://docs.rs/sub_projects"
 readme = "Readme.md"
 license = "MPL-2.0"
@@ -15,6 +15,7 @@ find-target = "0.1.0"
 pubgrub = "0.2.1"
 pathdiff = "0.2.1"
 relative-path = "1.7.2"
+swarm-ssh = "0.1.0"
 #ssh2 = "0.9.3"
 
 

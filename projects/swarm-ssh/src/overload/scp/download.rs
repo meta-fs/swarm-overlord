@@ -1,6 +1,19 @@
 use super::*;
 
 impl SwarmSSH {
+    /// Create a download task, note that the execute command needs to be [`DownloadTask::activated`]
+    ///
+    /// # Arguments
+    ///
+    /// * `remote_path`:
+    ///
+    /// returns: Result<DownloadTask, QError>
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use swarm_ssh::SwarmSSH;
+    /// ```
     pub fn download_task<P>(&self, remote_path: P) -> QResult<DownloadTask>
     where
         P: AsRef<Path>,
@@ -10,6 +23,19 @@ impl SwarmSSH {
 }
 
 impl<'s> DownloadTask<'s> {
+    /// Create a download task, note that the execute command needs to be [`DownloadTask::activated`]
+    ///
+    /// # Arguments
+    ///
+    /// * `remote_path`:
+    ///
+    /// returns: Result<DownloadTask, QError>
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use swarm_ssh::SwarmSSH;
+    /// ```
     pub async fn execute(self) -> QResult<Vec<u8>> {
         // 下载文件
         let (mut scp, _) = self.session.scp_recv(&self.target)?;

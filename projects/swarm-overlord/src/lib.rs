@@ -1,8 +1,7 @@
 pub use self::{
     artifacts::{github::GithubArtifact, local::LocalArtifact, ArtifactAddress, SwarmArtifact},
     overload::{
-        scp::{ContentResolver, UploadTask},
-        SwarmSSH,
+        SwarmOverload,
     },
 };
 
