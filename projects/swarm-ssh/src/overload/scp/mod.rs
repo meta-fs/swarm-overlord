@@ -20,7 +20,6 @@ pub struct ContentResolver {
     content: Vec<u8>,
 }
 
-
 /// Create a download task, note that the execute command needs to be [`DownloadTask::activated`]
 ///
 /// # Arguments
@@ -40,7 +39,6 @@ pub struct UploadTask<'s> {
     permission: i32,
     session: &'s SSH2Session,
 }
-
 
 /// Create a download task, note that the execute command needs to be [`DownloadTask::activated`]
 ///

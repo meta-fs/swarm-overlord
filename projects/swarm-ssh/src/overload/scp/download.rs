@@ -33,7 +33,7 @@ impl<'s> DownloadTask<'s> {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```rust,no_run
     /// use swarm_ssh::SwarmSSH;
     /// ```
     pub async fn execute(self) -> QResult<Vec<u8>> {

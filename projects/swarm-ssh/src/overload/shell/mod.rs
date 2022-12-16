@@ -59,4 +59,3 @@ impl ShellRunner<'_> {
         Ok(stdout)
     }
 }
-

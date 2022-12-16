@@ -27,13 +27,16 @@ impl SwarmSSH {
     ///
     /// # Examples
     ///
-    /// ```rust,no_run
-    /// use swarm_ssh::SwarmSSH;
-    /// let ssh = SwarmSSH::login_password("192.168.1.100:22", "root", "password").await?;
+    /// ```no_run
+    /// # use diagnostic_quick::QResult;
+    /// # use swarm_ssh::SwarmSSH;
+    /// async fn test_password() -> QResult<SwarmSSH> {
+    ///     SwarmSSH::login_password("192.168.1.100:22", "root", "password").await
+    /// }
     /// ```
     pub async fn login_password<A>(address: A, user: &str, password: &str) -> QResult<Self>
-        where
-            A: ToSocketAddrs,
+    where
+        A: ToSocketAddrs,
     {
         let tcp = TcpStream::connect(address)?;
         let mut session = SSH2Session::new()?;
@@ -46,4 +49,3 @@ impl SwarmSSH {
         Ok(Self { session })
     }
 }
-

@@ -12,15 +12,20 @@ impl SwarmSSH {
     ///
     /// # Examples
     ///
-    /// ```rust,no_run
-    /// let ssh = swarm_ssh::SwarmSSH::login_password("192.168.1.100:22", "root", "password").await?;
-    /// let data: &[u8] = include_bytes!("../Cargo.toml");
-    /// ssh.upload_task(data, "/tmp/Cargo.toml")?.with_permission(0o644).execute().await?;
+    /// ```no_run
+    /// # use diagnostic_quick::QResult;
+    /// # use swarm_ssh::SwarmSSH;
+    /// async fn test_upload() -> QResult {
+    ///     let ssh = SwarmSSH::login_password("192.168.1.100:22", "root", "password").await?;
+    ///     let data: &[u8] = include_bytes!("../mod.rs");
+    ///     ssh.upload_task(data, "/tmp/mod.rs")?.with_permission(0o644).execute().await?;
+    ///     Ok(())
+    /// }
     /// ```
     pub fn upload_task<C, P>(&self, content: C, remote_path: P) -> QResult<UploadTask>
-        where
-            P: AsRef<Path>,
-            ContentResolver: TryFrom<C, Error=QError>,
+    where
+        P: AsRef<Path>,
+        ContentResolver: TryFrom<C, Error = QError>,
     {
         let content = ContentResolver::try_from(content)?.content;
         Ok(UploadTask { content, target: remote_path.as_ref().to_path_buf(), permission: 0o644, session: &self.session })
