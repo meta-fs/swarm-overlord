@@ -21,6 +21,7 @@ fast_rsync = "0.1.4"
 axum = "0.6.1"
 sled-typed = "0.0.0"
 uuid = "1.2.2"
+platforms = "3.0.2"
 
 [dependencies.diagnostic-quick]
 version = "0.3.4"

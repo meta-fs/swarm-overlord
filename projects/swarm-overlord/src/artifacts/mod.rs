@@ -3,6 +3,7 @@ pub mod github;
 pub mod local;
 
 /// Metadata about a build artifact.
+/// `name/version/dir`
 pub struct SwarmArtifact {
     pub name: String,
     pub version: String,

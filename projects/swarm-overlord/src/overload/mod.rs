@@ -9,4 +9,6 @@ pub mod github;
 
 pub struct SwarmOverload {
     database: Database,
+    base_url: String,
+    base_path: String,
 }

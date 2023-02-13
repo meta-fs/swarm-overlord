@@ -16,7 +16,6 @@ pub struct SwarmArtifact {
     pub content: Box<dyn ArtifactAddress>,
     pub hash: String,
     pub size: u64,
-    pub mime: String,
 }
 
 pub struct FileNode {
